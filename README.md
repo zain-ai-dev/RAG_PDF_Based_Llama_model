@@ -1,93 +1,110 @@
-# Scanned PDF Question Answering with Llama3 (ChatGroq)
+# PDF RAG API with Llama 3
 
-This project is a **Streamlit-based web application** that allows users to upload **scanned or text-based PDFs**, extract their content, and ask questions based on the document. It uses **Llama3-8b-8192** via **Groq API** for question-answering with **RAG (Retrieval-Augmented Generation)**.
+[![GitHub stars](https://img.shields.io/github/stars/zain-ai-dev/RAG_PDF_Based_Llama_model?style=social)](https://github.com/zain-ai-dev/RAG_PDF_Based_Llama_model/stargazers)
+[![Python Version](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
----
+A high-performance FastAPI application for document intelligence using Llama 3 through Groq's inference API.
 
-## 🚀 Features
-- Upload **scanned** or **text-based** PDFs.
-- Extract text using **OCR (Tesseract)** for scanned documents.
-- Store and retrieve document embeddings using **FAISS**.
-- Ask questions, and get AI-generated answers based on the document's content.
-- Uses **Llama3** via **Groq API** for smart responses.
+![RAG Workflow](https://miro.medium.com/v2/resize:fit:1400/1*5ZLci3SuR0zM_QlZOADv8Q.png)
 
----
+## ✨ Key Features
 
-## 📌 Prerequisites
-Make sure you have the following installed:
+- **Multi-format Processing**  
+  📄 Handles both text-based and scanned PDFs with OCR fallback
+- **Blazing Fast Retrieval**  
+  ⚡ FAISS vector store with HuggingFace embeddings
+- **Production-Ready API**  
+  🚀 Fully async FastAPI endpoints with background processing
+- **Real-Time Monitoring**  
+  📈 Status tracking for all processed documents
 
-- **Python 3.8+**
-- **pip**
-- **Tesseract OCR** ([Download](https://github.com/UB-Mannheim/tesseract/wiki))
-- **Poppler** (for PDF to image conversion) ([Download](https://github.com/oschwartz10612/poppler-windows/releases))
-- A **Groq API Key** (Get it from [Groq API](https://groq.com))
+## 🛠️ Installation Guide
 
----
+### Prerequisites
+- Python 3.9+
+- [Tesseract OCR](https://github.com/tesseract-ocr/tesseract)
+- [Poppler](https://poppler.freedesktop.org/)
+- Groq API key ([Get yours here](https://console.groq.com/))
 
-## 🛠 Installation
+### Quick Start
+```bash
+# Clone with your preferred protocol
+git clone https://github.com/zain-ai-dev/RAG_PDF_Based_Llama_model.git
+cd RAG_PDF_Based_Llama_model
 
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/zain-ai-dev/RAG_PDF_Based_Llama_model.git
-   cd RAG_PDF_Based_Llama_model.git
-   ```
-2. **Create a Virtual Environment & Activate It:**
-   ```bash
-   python -m venv llama_env
-   # Activate the environment:
-   # Windows
-   llama_env\Scripts\activate
-   # macOS/Linux
-   source llama_env/bin/activate
-   ```
-3. **Install Dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. **Set Up Environment Variables:**
-   - Create a `.env` file in the root directory and add:
-     ```ini
-     GROQ_API_KEY=your_groq_api_key_here
-     ```
+# Setup environment (Linux/macOS)
+python -m venv venv
+source venv/bin/activate
 
----
+# Windows users
+.\venv\Scripts\activate
 
-## 🔄 Usage
+# Install dependencies
+pip install -r requirements.txt
 
-1. **Run the Streamlit App:**
-   ```bash
-   streamlit run src/app.py
-   ```
-2. **Upload a PDF.**
-3. **Ask questions** based on the document.
-4. **Get AI-powered answers!**
+# Configure environment
+cp .env.example .env
+nano .env  # Add your GROQ_API_KEY
 
----
+🏗 Project Architecture
+Copy
+RAG_PDF_Based_Llama_model/
+├── backend/
+│   ├── app/
+│   │   ├── core/       # App configuration
+│   │   ├── models/     # Pydantic schemas
+│   │   ├── services/   # Document processing
+│   │   ├── static/     # Vector store storage
+│   │   ├── utils/      # Helper functions
+│   │   ├── main.py     # FastAPI application
+│   │   └── routes.py   # API endpoints
+├── tests/              # Test cases
+└── requirements.txt    # Python dependencies
+📡 API Reference
+Endpoints
+Endpoint	Method	Description	Example
+/api/upload/	POST	Process PDF files	See example
+/api/query/	POST	Query documents	See example
+/api/status/{file_id}	GET	Check processing status	GET /api/status/abc123
+Usage Examples
+Uploading Documents
 
-## 📂 Project Structure
-```
-BigOsoft/
-│-- llama_env/           # Virtual environment (not uploaded to GitHub)
-│-- src/
-│   │-- app.py          # Main application script
-│-- .env                # Stores API keys (not uploaded to GitHub)
-│-- .gitignore          # Git ignore settings
-│-- README.md           # Project documentation
-│-- requirements.txt    # Python dependencies
-```
+bash
+Copy
+curl -X POST "http://localhost:8000/api/upload/" \
+  -H "Content-Type: multipart/form-data" \
+  -F "files=@document.pdf"
+Querying Documents
 
----
+bash
+Copy
+curl -X POST "http://localhost:8000/api/query/" \
+  -H "Content-Type: application/json" \
+  -d '{"query":"Explain the main concepts"}'
+🌟 Advanced Features
+Automatic OCR Fallback - Seamlessly handles scanned documents
 
-## 📜 License
-This project is licensed under the **MIT License**.
+Background Processing - Non-blocking file ingestion
 
----
+Vector Store Management - Automatic merging of document embeddings
 
-## 🤝 Contributing
-Feel free to submit issues or pull requests to improve the project!
+🤝 Contributing
+We welcome contributions! Please follow these steps:
 
----
+Fork the repository
 
-## 📞 Contact
-- **Author:** Zain Ul Abaiden
-- **GitHub:** [zain-ai-dev](https://github.com/zain-ai-dev)
+Create a feature branch (git checkout -b feature/AmazingFeature)
+
+Commit your changes (git commit -m 'Add some AmazingFeature')
+
+Push to the branch (git push origin feature/AmazingFeature)
+
+Open a Pull Request
+
+📜 License
+Distributed under the MIT License. See LICENSE for more information.
+
+📬 Contact
+Zain AI Dev - @zain-ai-dev
+Project Link: https://github.com/zain-ai-dev/RAG_PDF_Based_Llama_model

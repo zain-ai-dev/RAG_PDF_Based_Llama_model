@@ -1,11 +1,12 @@
-streamlit
 python-dotenv
 pytesseract
 pdf2image
 Pillow
-fitz
 langchain
-groq
+langchain-groq
 faiss-cpu
 sentence-transformers
 langchain-community
+fitz
+pypdf
+pymupdf
