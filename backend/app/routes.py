@@ -21,7 +21,8 @@ async def upload_pdfs(
 @router.post("/query/")
 async def query_pdfs(request: QueryRequest):
     try:
-        return await handle_query(request.query)
+        response = await handle_query(request.query)
+        return {"response": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
